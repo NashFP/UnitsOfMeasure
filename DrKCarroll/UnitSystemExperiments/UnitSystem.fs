@@ -277,6 +277,8 @@ type Quantity (b:float, dimensions:Dimensions) =
     member this.Log () = this.transcendental Math.Log 
     member this.Log10 () = this.transcendental Math.Log10 
 
+    member this.Exp () = this.transcendental Math.Exp
+
     member this.Asin () = Quantity(this.transcendental Math.Asin, Quantity.DimensionlessDimension)
     member this.Acos () = Quantity(this.transcendental Math.Acos, Quantity.DimensionlessDimension)
     member this.Atan () = Quantity(this.transcendental Math.Atan, Quantity.DimensionlessDimension)

@@ -318,6 +318,8 @@ type Quantity(b:float, bits:uint64) =
     member this.Log () = this.transcendental Math.Log 
     member this.Log10 () = this.transcendental Math.Log10 
 
+    member this.Exp () = this.transcendental Math.Exp
+
     member this.Asin () = Quantity(this.transcendental Math.Asin, 0UL)
     member this.Acos () = Quantity(this.transcendental Math.Acos, 0UL)
     member this.Atan () = Quantity(this.transcendental Math.Atan, 0UL)
