@@ -31,7 +31,7 @@ let getDeflection1 (P:float<N>) (L:float<m>) (E:float<N/m^2>) (I:float<m^4>) =
 
 let getDeflection2 
         (P:float<force>) (L:float<length>) 
-        (E:float<stress>) (I:float<length^4>) : float<length> =
+        (E:float<stress>) (I:float<length^4>) = // : float<mass> =
     P * L * L * L / (3.0 * E * I)
 
 let E = 209e9<N/m^2>

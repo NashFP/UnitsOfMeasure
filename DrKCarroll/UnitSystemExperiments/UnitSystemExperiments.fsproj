@@ -64,6 +64,7 @@
     <Compile Include="CantileverBeamFS.fs" />
     <Compile Include="CantileverBeam.fs" />
     <None Include="Snippets.fsx" />
+    <Compile Include="Secant.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

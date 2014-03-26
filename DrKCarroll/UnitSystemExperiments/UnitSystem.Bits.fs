@@ -87,10 +87,10 @@ type Quantity(b:float, bits:uint64) =
         | Dimension.Mass            -> "M"
         | Dimension.Length          -> "L"
         | Dimension.Time            -> "T"
-        | Dimension.Current         -> "C"
-        | Dimension.Temperature     -> "K"
-        | Dimension.Substance       -> "S"
-        | Dimension.Intensity       -> "I"
+        | Dimension.Current         -> "I"
+        | Dimension.Temperature     -> "Θ"
+        | Dimension.Substance       -> "N"
+        | Dimension.Intensity       -> "J"
         | Dimension.Dimensionless   -> ""
         | _                         -> "?"
 
@@ -140,7 +140,7 @@ type Quantity(b:float, bits:uint64) =
     /// formats the Dimensions using Quotient form (e.g., [M^2/(L^2T)])
     /// </summary>
     member this.DimensionsToQString() =
-        let dimensionExponents = BitConverter.GetBytes(this.ExponentBits) |> Array.map (fun b -> sbyte b)
+        let dimensionExponents = BitConverter.GetBytes(this.ExponentBits) |> Array.map (sbyte)
 
         let (numer, negDenom) = dimensionExponents
                                 |> Array.mapi (fun i e -> (Quantity.dimensionByIndex i, e))
@@ -198,10 +198,10 @@ type Quantity(b:float, bits:uint64) =
     static member private combineExponentBits op (leftExponentBits:uint64) (rightExponentBits:uint64) =
         let leftBytes = BitConverter.GetBytes(leftExponentBits)
         let rightBytes = BitConverter.GetBytes(rightExponentBits)
-        BitConverter.ToUInt64((leftBytes, rightBytes) ||> Array.map2 (fun l r -> (op) l r), 0)
+        BitConverter.ToUInt64((leftBytes, rightBytes) ||> Array.map2 (op), 0) 
  
     member private this.negateExponentBits() =
-        let bytes = BitConverter.GetBytes(~~~this.ExponentBits) |> Array.map (fun b -> b + 1uy)
+        let bytes = BitConverter.GetBytes(~~~this.ExponentBits) |> Array.map ((+) 1uy)
         BitConverter.ToUInt64(bytes, 0)
 
     static member (*) (left:Quantity, right:Quantity) =

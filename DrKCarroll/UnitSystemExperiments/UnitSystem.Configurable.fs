@@ -42,7 +42,7 @@ type Quantity (b:float, dimensions:Dimensions) =
             let dimensionComparisons =
                 (this.Dimensions, that.Dimensions) 
                 ||> Array.map2 (fun e1 e2 -> e1.CompareTo(e2)) 
-                |> Array.filter (fun c -> c <> 0)
+                |> Array.filter ((<>) 0)
                     
             match dimensionComparisons with
             | [||] -> this.BaseValue.CompareTo(that.BaseValue)
@@ -62,7 +62,7 @@ type Quantity (b:float, dimensions:Dimensions) =
 
     member this.IsNotConsistentWith (that:Quantity) = (not Quantity.IsInitialized) || (this.Dimensions, that.Dimensions) ||> Array.exists2 (<>)
     member this.IsConsistentWith (that:Quantity) = not <| this.IsNotConsistentWith(that)
-    member this.IsNotDimensionless () = (not Quantity.IsInitialized) || this.Dimensions |> Array.exists (fun e -> e <> 0y)
+    member this.IsNotDimensionless () = (not Quantity.IsInitialized) || this.Dimensions |> Array.exists ((<>) 0y)
     member this.IsDimensionless () = not <| this.IsNotDimensionless()
 
     static member val DefaultEpsilon = 5e-5 with get, set
@@ -206,7 +206,7 @@ type Quantity (b:float, dimensions:Dimensions) =
 
     static member Pow (mantissa:Quantity, exponent:int) =
         Quantity(Math.Pow(mantissa.BaseValue, float exponent), 
-                 mantissa.Dimensions |> Array.map (fun e -> e * sbyte exponent))
+                 mantissa.Dimensions |> Array.map ((*) (sbyte exponent)))
 
     member this.Pow exponent = Quantity.Pow(this, exponent)
 
